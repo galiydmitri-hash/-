@@ -7,19 +7,32 @@ const topicList = document.querySelector('.topic-list')
 const bg = document.querySelector('.bg')
 const addNewTopic = document.querySelector('.add-new-topic')
 
-const STORAGE_KEY = 'topics_data'
-
-function getStoredTopics() {
+// Загружает данные с сервера Vercel из базы данных
+async function getStoredTopics() {
     try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []
+        const response = await fetch('/api/get-topics')
+        if (!response.ok) throw new Error('Network response was not ok')
+        return await response.json()
     } catch (e) {
-        console.error('Failed to parse topics from localStorage:', e)
+        console.error('Failed to fetch topics from Database:', e)
         return []
     }
 }
 
-function saveTopics(topics) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(topics))
+// Отправляет новую тему в базу данных Neon
+async function saveTopicToDatabase(newTopic) {
+    try {
+        const response = await fetch('/api/add-topic', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newTopic)
+        })
+        if (!response.ok) throw new Error('Failed to save')
+        return true
+    } catch (e) {
+        console.error('Failed to save topic to Database:', e)
+        return false
+    }
 }
 
 function renderTopicItem(topic, isFirst) {
@@ -45,26 +58,26 @@ function renderTopicItem(topic, isFirst) {
     card.appendChild(mainSection)
     card.appendChild(secondarySection)
 
-    // FIX: Append the <li> wrapper containing optionBtn to the list
     list.appendChild(option)
     topicList.appendChild(card)
 }
 
-function loadTopics() {
+// Делаем функцию асинхронной, так как ждем данные из БД
+async function loadTopics() {
     list.innerHTML = ''
     topicList.innerHTML = ''
-    const topics = getStoredTopics()
+    const topics = await getStoredTopics() // Ждем загрузки
     topics.forEach((topic, index) => renderTopicItem(topic, index === 0))
 }
 
-function handleAddTopic() {
+// Функция добавления тоже становится асинхронной
+async function handleAddTopic() {
     const inputListValue = inputList.value.trim()
     const inputMainValue = inputMain.value.trim()
     const textareaValue = textarea.value.trim()
 
     if (!inputListValue || !inputMainValue || !textareaValue) return
 
-    const topics = getStoredTopics()
     const newTopic = {
         id: `tab-${Date.now()}`,
         title: inputListValue,
@@ -72,18 +85,30 @@ function handleAddTopic() {
         secondary: textareaValue
     }
 
-    topics.push(newTopic)
-    saveTopics(topics)
+    // Блокируем кнопку на время отправки, чтобы пользователь не спамил кликами
+    btn.disabled = true;
 
-    const isFirst = topics.length === 1
-    renderTopicItem(newTopic, isFirst)
+    // Сохраняем в базу данных Neon
+    const isSaved = await saveTopicToDatabase(newTopic)
 
-    inputList.value = ''
-    inputMain.value = ''
-    textarea.value = ''
+    if (isSaved) {
+        // Если успешно сохранилось в БД, определяем, первая ли это вкладка
+        const currentTopics = await getStoredTopics()
+        const isFirst = currentTopics.length === 1 || list.children.length === 0
+        
+        renderTopicItem(newTopic, isFirst)
 
-    bg.classList.remove('is-active')
-    addNewTopic.classList.remove('is-active')
+        inputList.value = ''
+        inputMain.value = ''
+        textarea.value = ''
+
+        bg.classList.remove('is-active')
+        addNewTopic.classList.remove('is-active')
+    } else {
+        alert('Не удалось сохранить данные на сервер. Попробуйте еще раз.');
+    }
+
+    btn.disabled = false;
 }
 
 function handleTabClick(event) {
@@ -104,7 +129,6 @@ function handleTabClick(event) {
 export function createNewElement() {
     loadTopics()
     
-    // Prevent multiple redundant event listeners
     btn.removeEventListener('click', handleAddTopic)
     list.removeEventListener('click', handleTabClick)
     
