@@ -5,8 +5,10 @@
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     padding-top: 80px;
+    background-color: #fcfcfc;
+    color: #333;
 }
 
 /* =========================
@@ -22,14 +24,14 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 10px;
-    background-color: white;
-    border-bottom: 2px solid rgb(234, 234, 234);
-    z-index: 2;
+    padding: 0 20px;
+    background-color: #ffffff;
+    border-bottom: 2px solid #eaeaea;
+    z-index: 10;
 }
 
 .title {
-    font-size: 25px;
+    font-size: 24px;
     color: goldenrod;
     font-weight: 600;
 }
@@ -39,9 +41,10 @@ header {
 ========================= */
 
 .list-btn,
-.add-btn, .close-btn {
-    height: 50px;
-    width: 50px;
+.add-btn, 
+.close-btn {
+    height: 48px;
+    width: 48px;
     border: none;
     border-radius: 50%;
     display: flex;
@@ -49,53 +52,58 @@ header {
     justify-content: center;
     background-color: transparent;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.25s ease;
 }
 
-.close-btn{
+.close-btn {
     align-self: flex-end;
     margin-right: 15px;
     transform: rotate(-45deg);
 }
 
-.list-btn{
-    transition: background-color 0.2s ease, transform 0.25s ease;
-}
 .list-btn.is-active {
     transform: rotate(-180deg);
 }
 
+.list-btn:hover,
+.add-btn:hover, 
+.close-btn:hover {
+    background-color: #f0f0f0;
+}
+
 .list-btn:active,
-.add-btn:active, .close-btn:active {
-    background-color: rgb(234, 234, 234);
+.add-btn:active, 
+.close-btn:active {
+    background-color: #eaeaea;
 }
 
 /* =========================
-   LIST
+   DROPDOWN LIST
 ========================= */
 
 .list {
     position: fixed;
     top: 85px;
-    right: 10px;
+    right: 15px;
     width: 300px;
-    height: 500px;
+    max-width: calc(100vw - 30px);
+    max-height: 500px;
     padding: 15px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    gap: 5px;
+    gap: 8px;
     list-style: none;
     overflow-x: hidden;
     overflow-y: auto;
-    border-radius: 30px;
-    background-color: white;
-    box-shadow: 0 0 15px rgba(89, 89, 89, 0.35);
+    border-radius: 24px;
+    background-color: #ffffff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
-    transform: translateY(10px);
+    transform: translateY(-10px);
     z-index: 102;
     transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
 }
@@ -107,6 +115,7 @@ header {
     transform: translateY(0);
 }
 
+/* Скрытие скроллбара */
 .topic-list::-webkit-scrollbar,
 .list::-webkit-scrollbar,
 textarea::-webkit-scrollbar,
@@ -128,113 +137,116 @@ textarea,
 
 .bg {
     position: fixed;
-    top: 50%;
-    left: 50%;
+    inset: 0;
     width: 100%;
     height: 100%;
-    border-radius: 50%;
-    background-color: rgba(234, 234, 234, 0.7);
+    background-color: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
-    transform: translate(-50%, -50%) scale(0);
-    transform-origin: center;
-    z-index: 100;
-    transition: transform 0.25s ease, border-radius 0.25s ease;
-}
-
-.bg.is-active {
-    transform: translate(-50%, -50%) scale(1);
-    border-radius: 0;
-}
-
-/* =========================
-   ADD NEW TOPIC
-========================= */
-
-.add-new-topic {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 600px;
-    height: 800px;
-    max-width: calc(100vw - 30px);
-    max-height: calc(100vh - 30px);
-    padding: 15px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    background-color: white;
-    border-radius: 40px;
-    box-shadow: 0 0 15px rgba(89, 89, 89, 0.35);
-    transform: translate(-50%, -50%);
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
-    z-index: 103;
+    z-index: 100;
     transition: opacity 0.25s ease, visibility 0.25s ease;
 }
 
-.add-new-topic.is-active {
+.bg.is-active {
     visibility: visible;
     opacity: 1;
     pointer-events: auto;
 }
 
 /* =========================
-   INPUTS
+   ADD NEW TOPIC MODAL
 ========================= */
 
-.inputForList{
-    width: 95%;
-    height: 60px;
-    padding: 0 15px;
-    border: 2px solid rgb(234, 234, 234);
-    border-radius: 40px;
+.add-new-topic {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    max-width: 600px;
+    max-height: calc(100vh - 40px);
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    background-color: #ffffff;
+    border-radius: 32px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    transform: translate(-50%, -46%);
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 103;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+    overflow-y: auto;
+}
+
+.add-new-topic.is-active {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%);
+}
+
+/* =========================
+   INPUTS & TEXTAREA
+========================= */
+
+.inputForList {
+    width: 100%;
+    height: 56px;
+    padding: 0 20px;
+    border: 2px solid #eaeaea;
+    border-radius: 28px;
     outline: none;
-    font-family: 'Inter', sans-serif;
-    font-size: 18px;
-    background-color: white;
+    font-family: inherit;
+    font-size: 16px;
+    background-color: #ffffff;
+    transition: border-color 0.2s ease;
+}
+
+textarea {
+    width: 100%;
+    height: 180px;
+    padding: 16px 20px;
+    border: 2px solid #eaeaea;
+    border-radius: 24px;
+    outline: none;
+    font-family: inherit;
+    font-size: 16px;
+    resize: none;
+    transition: border-color 0.2s ease;
 }
 
 .inputForList:focus,
 textarea:focus {
-    border-color: rgb(200, 200, 200);
+    border-color: goldenrod;
 }
 
 /* =========================
-   TEXTAREA
-========================= */
-
-textarea {
-    width: 95%;
-    height: 200px;
-    padding: 15px;
-    border: 2px solid rgb(234, 234, 234);
-    border-radius: 40px;
-    outline: none;
-    font-family: 'Inter', sans-serif;
-    font-size: 18px;
-    resize: none;
-}
-
-/* =========================
-   ADD BUTTON
+   MODAL BUTTON
 ========================= */
 
 .add-new-topic-btn {
     align-self: flex-end;
-    width: 120px;
-    height: 60px;
-    margin-right: 15px;
+    width: 130px;
+    height: 50px;
     border: none;
-    border-radius: 15px;
-    font-size: 20px;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: 600;
     background-color: rgb(151, 192, 255);
-    color: rgb(31, 114, 182);
+    color: rgb(24, 90, 145);
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.add-new-topic-btn:hover {
+    background-color: rgb(138, 183, 250);
 }
 
 .add-new-topic-btn:active {
@@ -247,8 +259,8 @@ textarea {
 ========================= */
 
 .list > li {
-    width: 90%;
-    height: 50px;
+    width: 92%;
+    height: 46px;
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -259,21 +271,21 @@ textarea {
     width: 100%;
     height: 100%;
     border: none;
-    border-radius: 15px;
+    border-radius: 12px;
     background-color: transparent;
-    font-family: 'Inter', sans-serif;
-    font-size: 20px;
+    font-family: inherit;
+    font-size: 16px;
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .option-btn:hover {
-    background-color: rgb(234, 234, 234);
+    background-color: #eaeaea;
 }
 
 .option-btn.is-focus {
     background-color: goldenrod;
-    color: white;
+    color: #ffffff;
 }
 
 .option-btn.is-focus:hover {
@@ -296,11 +308,11 @@ textarea {
     width: 100%;
     height: calc(100vh - 80px);
     display: flex;
-    padding: 20px 10px;
+    padding: 30px 16px;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
     overflow-y: auto;
 }
 
@@ -312,23 +324,48 @@ textarea {
     display: flex;
 }
 
+.main-info,
+.secondary-info {
+    width: 100%;
+    max-width: 800px;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
 .main-info {
-    width: 800px;
     min-height: 50px;
-    padding: 15px;
-    border-radius: 30px;
+    padding: 20px;
+    border-radius: 24px;
     background-color: rgb(251, 225, 157);
-    white-space: pre-wrap;
 }
 
-.secondary-info{
-    width: 800px;
-    white-space: pre-wrap;
-    
+.secondary-info {
+    padding: 0 5px;
 }
 
-@media (max-width: 972px) {
-    .main-info, .secondary-info{
-        width: 95%;
+/* =========================
+   MEDIA QUERIES
+========================= */
+
+@media (max-width: 600px) {
+    header {
+        padding: 0 10px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .card {
+        padding: 20px 12px;
+        gap: 15px;
+    }
+
+    .main-info {
+        padding: 16px;
+        border-radius: 18px;
     }
 }
