@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Історія України</title>
+</head>
+<body>
+    <header>
+        <img src="Image/icon.png" alt="Історія України" style="height: 75px; width: 75px;">
+        <button class="add-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none">
+                <path
+                    d="M12 5V19M5 12H19"
+                    stroke="#d1d5db"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                />
+            </svg>
+        </button>
+        <button class="list-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none">
+                <path
+                    d="M7 15L12 10L17 15"
+                    stroke="#d1d5db"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </button>
+        <ul class="list"></ul>
+    </header>
+    <div class="topic-list"></div>
+    <div class="bg"></div>
+    <div class="add-new-topic">
+        <button class="close-btn">            
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none">
+                <path
+                    d="M12 5V19M5 12H19"
+                    stroke="#d1d5db"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                />
+            </svg>
+        </button>
+        <input type="text" class="inputForList" placeholder="Назва списку">
+        <textarea class="inputForMain" placeholder="Основная информация"></textarea>
+        <textarea class="inputForSecondary" placeholder="Вторичная информация"></textarea>
+        <button class="add-new-topic-btn">Додати</button>
+    </div>
+</body>
+<script type="module" src="index.js"></script>
+</html>

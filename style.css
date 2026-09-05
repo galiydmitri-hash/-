@@ -1,0 +1,334 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    padding-top: 80px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    background-color: white;
+    border-bottom: 2px solid rgb(234, 234, 234);
+    z-index: 2;
+}
+
+.title {
+    font-size: 25px;
+    color: goldenrod;
+    font-weight: 600;
+}
+
+/* =========================
+   HEADER BUTTONS
+========================= */
+
+.list-btn,
+.add-btn, .close-btn {
+    height: 50px;
+    width: 50px;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.close-btn{
+    align-self: flex-end;
+    margin-right: 15px;
+    transform: rotate(-45deg);
+}
+
+.list-btn{
+    transition: background-color 0.2s ease, transform 0.25s ease;
+}
+.list-btn.is-active {
+    transform: rotate(-180deg);
+}
+
+.list-btn:active,
+.add-btn:active, .close-btn:active {
+    background-color: rgb(234, 234, 234);
+}
+
+/* =========================
+   LIST
+========================= */
+
+.list {
+    position: fixed;
+    top: 85px;
+    right: 10px;
+    width: 300px;
+    height: 500px;
+    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+    list-style: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-radius: 30px;
+    background-color: white;
+    box-shadow: 0 0 15px rgba(89, 89, 89, 0.35);
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    z-index: 102;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+}
+
+.list.is-active {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.topic-list::-webkit-scrollbar,
+.list::-webkit-scrollbar,
+textarea::-webkit-scrollbar,
+.card::-webkit-scrollbar {
+    display: none;
+}
+
+.topic-list,
+.list,
+textarea,
+.card {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* =========================
+   BACKGROUND OVERLAY
+========================= */
+
+.bg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: rgba(234, 234, 234, 0.7);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transform: translate(-50%, -50%) scale(0);
+    transform-origin: center;
+    z-index: 100;
+    transition: transform 0.25s ease, border-radius 0.25s ease;
+}
+
+.bg.is-active {
+    transform: translate(-50%, -50%) scale(1);
+    border-radius: 0;
+}
+
+/* =========================
+   ADD NEW TOPIC
+========================= */
+
+.add-new-topic {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    height: 800px;
+    max-width: calc(100vw - 30px);
+    max-height: calc(100vh - 30px);
+    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    background-color: white;
+    border-radius: 40px;
+    box-shadow: 0 0 15px rgba(89, 89, 89, 0.35);
+    transform: translate(-50%, -50%);
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 103;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.add-new-topic.is-active {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+.inputForList{
+    width: 95%;
+    height: 60px;
+    padding: 0 15px;
+    border: 2px solid rgb(234, 234, 234);
+    border-radius: 40px;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    background-color: white;
+}
+
+.inputForList:focus,
+textarea:focus {
+    border-color: rgb(200, 200, 200);
+}
+
+/* =========================
+   TEXTAREA
+========================= */
+
+textarea {
+    width: 95%;
+    height: 200px;
+    padding: 15px;
+    border: 2px solid rgb(234, 234, 234);
+    border-radius: 40px;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    resize: none;
+}
+
+/* =========================
+   ADD BUTTON
+========================= */
+
+.add-new-topic-btn {
+    align-self: flex-end;
+    width: 120px;
+    height: 60px;
+    margin-right: 15px;
+    border: none;
+    border-radius: 15px;
+    font-size: 20px;
+    background-color: rgb(151, 192, 255);
+    color: rgb(31, 114, 182);
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.add-new-topic-btn:active {
+    background-color: rgb(129, 164, 215);
+    transform: scale(0.97);
+}
+
+/* =========================
+   LIST ITEMS
+========================= */
+
+.list > li {
+    width: 90%;
+    height: 50px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.option-btn {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 15px;
+    background-color: transparent;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.option-btn:hover {
+    background-color: rgb(234, 234, 234);
+}
+
+.option-btn.is-focus {
+    background-color: goldenrod;
+    color: white;
+}
+
+.option-btn.is-focus:hover {
+    background-color: rgb(218, 160, 20);
+}
+
+/* =========================
+   TOPIC LIST & CARDS
+========================= */
+
+.topic-list {
+    position: relative;
+    width: 100%;
+    min-height: calc(100vh - 80px);
+}
+
+.card {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: calc(100vh - 80px);
+    display: flex;
+    padding: 20px 10px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+}
+
+.card.tab-content {
+    display: none;
+}
+
+.card.tab-content.is-active {
+    display: flex;
+}
+
+.main-info {
+    width: 800px;
+    min-height: 50px;
+    padding: 15px;
+    border-radius: 30px;
+    background-color: rgb(251, 225, 157);
+    white-space: pre-wrap;
+}
+
+.secondary-info{
+    width: 800px;
+    white-space: pre-wrap;
+    
+}
+
+@media (max-width: 972px) {
+    .main-info, .secondary-info{
+        width: 95%;
+    }
+}
