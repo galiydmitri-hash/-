@@ -1,20 +1,26 @@
-* {
+/* =========================
+   RESET & BASICS
+========================= */
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     padding-top: 80px;
-    background-color: #fcfcfc;
-    color: #333;
+    background-color: #f8f9fa;
+    color: #212529;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
 /* =========================
    HEADER
 ========================= */
-
 header {
     position: fixed;
     top: 0;
@@ -24,41 +30,45 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 0 24px;
     background-color: #ffffff;
-    border-bottom: 2px solid #eaeaea;
+    border-bottom: 1px solid #e9ecef;
     z-index: 10;
 }
 
 .title {
-    font-size: 24px;
-    color: goldenrod;
-    font-weight: 600;
+    font-size: 1.5rem;
+    color: #d97706;
+    font-weight: 700;
+    letter-spacing: -0.02em;
 }
 
 /* =========================
    HEADER BUTTONS
 ========================= */
-
 .list-btn,
-.add-btn, 
+.add-btn,
 .close-btn {
-    height: 48px;
-    width: 48px;
+    height: 44px;
+    width: 44px;
     border: none;
     border-radius: 50%;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     background-color: transparent;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.25s ease;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .close-btn {
     align-self: flex-end;
-    margin-right: 15px;
+    margin-right: 12px;
     transform: rotate(-45deg);
+}
+
+.list-btn {
+    transition: background-color 0.2s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .list-btn.is-active {
@@ -66,46 +76,45 @@ header {
 }
 
 .list-btn:hover,
-.add-btn:hover, 
+.add-btn:hover,
 .close-btn:hover {
-    background-color: #f0f0f0;
+    background-color: #f1f3f5;
 }
 
 .list-btn:active,
-.add-btn:active, 
+.add-btn:active,
 .close-btn:active {
-    background-color: #eaeaea;
+    background-color: #e9ecef;
 }
 
 /* =========================
    DROPDOWN LIST
 ========================= */
-
 .list {
     position: fixed;
-    top: 85px;
-    right: 15px;
-    width: 300px;
-    max-width: calc(100vw - 30px);
-    max-height: 500px;
-    padding: 15px 0;
+    top: 90px;
+    right: 24px;
+    width: 320px;
+    max-width: calc(100vw - 32px);
+    max-height: 480px;
+    padding: 12px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    gap: 8px;
+    gap: 6px;
     list-style: none;
     overflow-x: hidden;
     overflow-y: auto;
-    border-radius: 24px;
+    border-radius: 20px;
     background-color: #ffffff;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04);
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
-    transform: translateY(-10px);
+    transform: translateY(-8px);
     z-index: 102;
-    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
 }
 
 .list.is-active {
@@ -134,15 +143,14 @@ textarea,
 /* =========================
    BACKGROUND OVERLAY
 ========================= */
-
 .bg {
     position: fixed;
     inset: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
@@ -159,24 +167,23 @@ textarea,
 /* =========================
    ADD NEW TOPIC MODAL
 ========================= */
-
 .add-new-topic {
     position: fixed;
     top: 50%;
     left: 50%;
-    width: 90%;
-    max-width: 600px;
+    width: 100%;
+    max-width: 560px;
     max-height: calc(100vh - 40px);
-    padding: 24px 20px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 16px;
     background-color: #ffffff;
-    border-radius: 32px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-    transform: translate(-50%, -46%);
+    border-radius: 28px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    transform: translate(-50%, -48%);
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
@@ -195,72 +202,69 @@ textarea,
 /* =========================
    INPUTS & TEXTAREA
 ========================= */
-
 .inputForList {
     width: 100%;
-    height: 56px;
-    padding: 0 20px;
-    border: 2px solid #eaeaea;
-    border-radius: 28px;
+    height: 52px;
+    padding: 0 18px;
+    border: 1.5px solid #dee2e6;
+    border-radius: 16px;
     outline: none;
     font-family: inherit;
-    font-size: 16px;
+    font-size: 1rem;
     background-color: #ffffff;
-    transition: border-color 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 textarea {
     width: 100%;
     height: 180px;
-    padding: 16px 20px;
-    border: 2px solid #eaeaea;
-    border-radius: 24px;
+    padding: 16px;
+    border: 1.5px solid #dee2e6;
+    border-radius: 16px;
     outline: none;
     font-family: inherit;
-    font-size: 16px;
+    font-size: 1rem;
     resize: none;
-    transition: border-color 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .inputForList:focus,
 textarea:focus {
-    border-color: goldenrod;
+    border-color: #d97706;
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
 }
 
 /* =========================
    MODAL BUTTON
 ========================= */
-
 .add-new-topic-btn {
     align-self: flex-end;
     width: 130px;
-    height: 50px;
+    height: 48px;
     border: none;
-    border-radius: 16px;
-    font-size: 16px;
+    border-radius: 14px;
+    font-size: 1rem;
     font-weight: 600;
-    background-color: rgb(151, 192, 255);
-    color: rgb(24, 90, 145);
+    background-color: #2563eb;
+    color: #ffffff;
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .add-new-topic-btn:hover {
-    background-color: rgb(138, 183, 250);
+    background-color: #1d4ed8;
 }
 
 .add-new-topic-btn:active {
-    background-color: rgb(129, 164, 215);
     transform: scale(0.97);
 }
 
 /* =========================
    LIST ITEMS
 ========================= */
-
 .list > li {
     width: 92%;
-    height: 46px;
+    height: 44px;
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -274,98 +278,110 @@ textarea:focus {
     border-radius: 12px;
     background-color: transparent;
     font-family: inherit;
-    font-size: 16px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #495057;
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .option-btn:hover {
-    background-color: #eaeaea;
+    background-color: #f1f3f5;
+    color: #212529;
 }
 
 .option-btn.is-focus {
-    background-color: goldenrod;
+    background-color: #d97706;
     color: #ffffff;
 }
 
 .option-btn.is-focus:hover {
-    background-color: rgb(218, 160, 20);
+    background-color: #b45309;
 }
 
 /* =========================
    TOPIC LIST & CARDS
 ========================= */
-
 .topic-list {
-    position: relative;
     width: 100%;
     min-height: calc(100vh - 80px);
 }
 
 .card {
-    position: absolute;
-    inset: 0;
     width: 100%;
-    height: calc(100vh - 80px);
-    display: flex;
-    padding: 30px 16px;
-    align-items: center;
-    justify-content: flex-start;
-    flex-direction: column;
-    gap: 20px;
-    overflow-y: auto;
-}
-
-.card.tab-content {
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 32px 20px;
     display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
 
 .card.tab-content.is-active {
     display: flex;
 }
 
+/* Настройки надежного переноса текста */
 .main-info,
 .secondary-info {
     width: 100%;
-    max-width: 800px;
+    font-size: 1.05rem;
+    line-height: 1.6;
     white-space: pre-wrap;
-    overflow-wrap: break-word;
-    word-break: break-word;
-    font-size: 16px;
-    line-height: 1.5;
+    overflow-wrap: anywhere; /* Безопасный перенос любых длинных слов */
+    word-break: normal;
 }
 
 .main-info {
-    min-height: 50px;
-    padding: 20px;
-    border-radius: 24px;
-    background-color: rgb(251, 225, 157);
+    padding: 24px;
+    border-radius: 20px;
+    background-color: #fff4d1;
+    border: 1px solid #ffe082;
+    color: #4a3b00;
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.05);
 }
 
 .secondary-info {
-    padding: 0 5px;
+    padding: 0 8px;
+    color: #495057;
 }
 
 /* =========================
    MEDIA QUERIES
 ========================= */
-
-@media (max-width: 600px) {
+@media (max-width: 640px) {
     header {
-        padding: 0 10px;
+        padding: 0 16px;
     }
 
     .title {
-        font-size: 20px;
+        font-size: 1.25rem;
+    }
+
+    .list {
+        right: 16px;
+        top: 85px;
+    }
+
+    .add-new-topic {
+        width: calc(100vw - 32px);
+        padding: 20px 16px;
+        border-radius: 20px;
     }
 
     .card {
-        padding: 20px 12px;
-        gap: 15px;
+        padding: 20px 16px;
+        gap: 16px;
     }
 
     .main-info {
         padding: 16px;
-        border-radius: 18px;
+        border-radius: 16px;
+        font-size: 0.98rem;
+    }
+
+    .secondary-info {
+        font-size: 0.98rem;
     }
 }
