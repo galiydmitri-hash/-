@@ -321,10 +321,9 @@ textarea:focus,
     flex-direction: column;
     padding: 10px 0;
     gap: 10px;
-    overflow-y: auto;
 }
 
-.short-info::-webkit-scrollbar {
+.short-info::-webkit-scrollbar, .topic-list::-webkit-scrollbar {
     display: none;
 }
 
@@ -337,6 +336,7 @@ textarea:focus,
     top: 0;
     left: 0;
     transition: all 0.25s;
+    overflow-y: auto;
 }
 
 .short-info.is-active,
