@@ -1,6 +1,3 @@
-/* =========================
-   RESET & BASICS
-========================= */
 *,
 *::before,
 *::after {
@@ -18,9 +15,6 @@ body {
     overflow-x: hidden;
 }
 
-/* =========================
-   HEADER
-========================= */
 header {
     position: fixed;
     top: 0;
@@ -43,12 +37,10 @@ header {
     letter-spacing: -0.02em;
 }
 
-/* =========================
-   HEADER BUTTONS
-========================= */
 .list-btn,
 .add-btn,
-.close-btn {
+.close-btn,
+.dashboard-btn {
     height: 44px;
     width: 44px;
     border: none;
@@ -68,7 +60,8 @@ header {
 }
 
 .list-btn {
-    transition: background-color 0.2s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background-color 0.2s ease,
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .list-btn.is-active {
@@ -77,7 +70,8 @@ header {
 
 .list-btn:hover,
 .add-btn:hover,
-.close-btn:hover {
+.close-btn:hover,
+.dashboard-btn:hover {
     background-color: #f1f3f5;
 }
 
@@ -87,9 +81,6 @@ header {
     background-color: #e9ecef;
 }
 
-/* =========================
-   DROPDOWN LIST
-========================= */
 .list {
     position: fixed;
     top: 90px;
@@ -108,13 +99,18 @@ header {
     overflow-y: auto;
     border-radius: 20px;
     background-color: #ffffff;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04);
+    box-shadow:
+        0 12px 32px rgba(0, 0, 0, 0.12),
+        0 2px 6px rgba(0, 0, 0, 0.04);
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
     transform: translateY(-8px);
     z-index: 102;
-    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        visibility 0.2s ease;
 }
 
 .list.is-active {
@@ -124,7 +120,6 @@ header {
     transform: translateY(0);
 }
 
-/* Скрытие скроллбара */
 .topic-list::-webkit-scrollbar,
 .list::-webkit-scrollbar,
 textarea::-webkit-scrollbar,
@@ -140,9 +135,6 @@ textarea,
     scrollbar-width: none;
 }
 
-/* =========================
-   BACKGROUND OVERLAY
-========================= */
 .bg {
     position: fixed;
     inset: 0;
@@ -155,7 +147,9 @@ textarea,
     opacity: 0;
     pointer-events: none;
     z-index: 100;
-    transition: opacity 0.25s ease, visibility 0.25s ease;
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease;
 }
 
 .bg.is-active {
@@ -164,10 +158,8 @@ textarea,
     pointer-events: auto;
 }
 
-/* =========================
-   ADD NEW TOPIC MODAL
-========================= */
-.add-new-topic {
+.add-new-topic,
+.add-new-link {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -188,21 +180,23 @@ textarea,
     opacity: 0;
     pointer-events: none;
     z-index: 103;
-    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease,
+        visibility 0.25s ease;
     overflow-y: auto;
 }
 
-.add-new-topic.is-active {
+.add-new-topic.is-active,
+.add-new-link.is-active {
     visibility: visible;
     opacity: 1;
     pointer-events: auto;
     transform: translate(-50%, -50%);
 }
 
-/* =========================
-   INPUTS & TEXTAREA
-========================= */
-.inputForList {
+.inputForList,
+.inputForLink {
     width: 100%;
     height: 52px;
     padding: 0 18px;
@@ -212,7 +206,9 @@ textarea,
     font-family: inherit;
     font-size: 1rem;
     background-color: #ffffff;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 textarea {
@@ -225,19 +221,20 @@ textarea {
     font-family: inherit;
     font-size: 1rem;
     resize: none;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .inputForList:focus,
-textarea:focus {
+textarea:focus,
+.inputForLink:focus {
     border-color: #d97706;
     box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
 }
 
-/* =========================
-   MODAL BUTTON
-========================= */
-.add-new-topic-btn {
+.add-new-topic-btn,
+.add-new-link-btn {
     align-self: flex-end;
     width: 130px;
     height: 48px;
@@ -248,20 +245,21 @@ textarea:focus {
     background-color: #2563eb;
     color: #ffffff;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    transition:
+        background-color 0.2s ease,
+        transform 0.1s ease;
 }
 
-.add-new-topic-btn:hover {
+.add-new-topic-btn:hover,
+.add-new-link-btn:hover {
     background-color: #1d4ed8;
 }
 
-.add-new-topic-btn:active {
+.add-new-topic-btn:active,
+.add-new-link-btn:active {
     transform: scale(0.97);
 }
 
-/* =========================
-   LIST ITEMS
-========================= */
 .list > li {
     width: 92%;
     height: 44px;
@@ -271,7 +269,8 @@ textarea:focus {
     justify-content: center;
 }
 
-.option-btn {
+.option-btn,
+.btn {
     width: 100%;
     height: 100%;
     border: none;
@@ -282,15 +281,24 @@ textarea:focus {
     font-weight: 500;
     color: #495057;
     cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
 }
 
-.option-btn:hover {
+.btn {
+    height: 50px;
+    width: 50px;
+}
+
+.option-btn:hover,
+.btn:hover {
     background-color: #f1f3f5;
     color: #212529;
 }
 
-.option-btn.is-focus {
+.option-btn.is-focus,
+.btn.is-focus {
     background-color: #d97706;
     color: #ffffff;
 }
@@ -299,12 +307,43 @@ textarea:focus {
     background-color: #b45309;
 }
 
-/* =========================
-   TOPIC LIST & CARDS
-========================= */
-.topic-list {
+.topic-list,
+.short-info {
     width: 100%;
-    min-height: calc(100vh - 80px);
+    height: 100%;
+    z-index: 1;
+}
+
+.short-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: 10px 0;
+    gap: 10px;
+    overflow-y: auto;
+}
+
+.short-info::-webkit-scrollbar {
+    display: none;
+}
+
+.topic-list,
+.short-info {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 0.25s;
+}
+
+.short-info.is-active,
+.topic-list.is-active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 .card {
@@ -322,14 +361,13 @@ textarea:focus {
     display: flex;
 }
 
-/* Настройки надежного переноса текста */
 .main-info,
 .secondary-info {
     width: 100%;
     font-size: 1.05rem;
     line-height: 1.6;
     white-space: pre-wrap;
-    overflow-wrap: anywhere; /* Безопасный перенос любых длинных слов */
+    overflow-wrap: anywhere;
     word-break: normal;
 }
 
@@ -347,12 +385,86 @@ textarea:focus {
     color: #495057;
 }
 
-/* =========================
-   MEDIA QUERIES
-========================= */
+.main-container {
+    display: flex;
+    min-height: calc(100vh - 80px);
+    width: 100%;
+    background-color: transparent;
+    overflow: hidden;
+}
+
+.dashboard {
+    width: 80px;
+    margin-left: -80px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    background-color: transparent;
+    border-right: 1px solid #e9ecef;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+.dashboard.is-active {
+    margin-left: 0;
+}
+
+.secondary-container {
+    flex-grow: 1;
+    position: relative;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.link-container {
+    height: 90px;
+    width: 500px;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    background-color: #f1f3f5;
+    border-radius: 15px;
+}
+
+.icon {
+    height: 60px;
+    width: 60px;
+    border-radius: 60px;
+    background-color: #d97706;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.link-btn {
+    height: 50px;
+    width: 150px;
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 15px;
+    color: #d97706;
+    border: 1px solid #d97706;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+.link-btn:active {
+    transform: scale(0.97);
+}
+
 @media (max-width: 640px) {
     header {
         padding: 0 16px;
+    }
+
+    .link-container {
+        width: 90%;
     }
 
     .title {
@@ -364,7 +476,8 @@ textarea:focus {
         top: 85px;
     }
 
-    .add-new-topic {
+    .add-new-topic,
+    .add-new-link {
         width: calc(100vw - 32px);
         padding: 20px 16px;
         border-radius: 20px;

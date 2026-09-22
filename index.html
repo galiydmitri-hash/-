@@ -8,7 +8,19 @@
 </head>
 <body>
     <header>
-        <img src="Image/icon.png" alt="Історія України" style="height: 75px; width: 75px;">
+        <button class="dashboard-btn">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <rect x="3.5" y="3.5" width="10" height="7" rx="1.5"
+                    fill="#d1d5db"/>
+                <rect x="16" y="3.5" width="4.5" height="7" rx="1.5"
+                    fill="#d1d5db"/>
+                <rect x="3.5" y="13.5" width="5" height="7" rx="1.5"
+                    fill="#d1d5db"/>
+                <rect x="11.5" y="13.5" width="9" height="7" rx="1.5"
+                    fill="#d1d5db"/>
+            </svg>
+        </button>
         <button class="add-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none">
                 <path
@@ -32,7 +44,40 @@
         </button>
         <ul class="list"></ul>
     </header>
-    <div class="topic-list"></div>
+    <div class="main-container">
+        <div class="dashboard">
+            <button class="topic-list-btn btn">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+
+                    <path
+                        d="M3 10.8L12 3L21 10.8V20C21 20.55 20.55 21 20 21H15V15H9V21H4C3.45 21 3 20.55 3 20V10.8Z"
+                        stroke="#d1d5db"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+
+                </svg>
+            </button>
+            <button class="short-info-btn btn">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 4H14L18 8V20H6V4Z"
+                            stroke="#d1d5db" stroke-width="2"
+                            stroke-linejoin="round"/>
+                    <path d="M9 13L11 15L15 11"
+                            stroke="#d1d5db" stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+        <div class="secondary-container">
+            <div class="short-info"></div>
+            <div class="topic-list"></div>
+        </div>
+    </div>
     <div class="bg"></div>
     <div class="add-new-topic">
         <button class="close-btn">            
@@ -49,6 +94,20 @@
         <textarea class="inputForMain" placeholder="Основная информация"></textarea>
         <textarea class="inputForSecondary" placeholder="Вторичная информация"></textarea>
         <button class="add-new-topic-btn">Додати</button>
+    </div>
+    <div class="add-new-link">
+        <button class="close-btn">            
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none">
+                <path
+                    d="M12 5V19M5 12H19"
+                    stroke="#d1d5db"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                />
+            </svg>
+        </button>
+        <input type="text" class="inputForLink" placeholder="Назва списку">
+        <button class="add-new-link-btn">Додати</button>
     </div>
 </body>
 <script type="module" src="index.js"></script>

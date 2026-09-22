@@ -7,7 +7,6 @@ const topicList = document.querySelector('.topic-list')
 const bg = document.querySelector('.bg')
 const addNewTopic = document.querySelector('.add-new-topic')
 
-// Загружает данные с сервера Vercel из базы данных
 async function getStoredTopics() {
     try {
         const response = await fetch('/api/get-topics')
@@ -19,7 +18,6 @@ async function getStoredTopics() {
     }
 }
 
-// Отправляет новую тему в базу данных Neon
 async function saveTopicToDatabase(newTopic) {
     try {
         const response = await fetch('/api/add-topic', {
@@ -62,7 +60,6 @@ function renderTopicItem(topic, isFirst) {
     topicList.appendChild(card)
 }
 
-// Делаем функцию асинхронной, так как ждем данные из БД
 async function loadTopics() {
     list.innerHTML = ''
     topicList.innerHTML = ''
@@ -70,7 +67,6 @@ async function loadTopics() {
     topics.forEach((topic, index) => renderTopicItem(topic, index === 0))
 }
 
-// Функция добавления тоже становится асинхронной
 async function handleAddTopic() {
     const inputListValue = inputList.value.trim()
     const inputMainValue = inputMain.value.trim()
@@ -85,14 +81,11 @@ async function handleAddTopic() {
         secondary: textareaValue
     }
 
-    // Блокируем кнопку на время отправки, чтобы пользователь не спамил кликами
     btn.disabled = true;
 
-    // Сохраняем в базу данных Neon
     const isSaved = await saveTopicToDatabase(newTopic)
 
     if (isSaved) {
-        // Если успешно сохранилось в БД, определяем, первая ли это вкладка
         const currentTopics = await getStoredTopics()
         const isFirst = currentTopics.length === 1 || list.children.length === 0
         

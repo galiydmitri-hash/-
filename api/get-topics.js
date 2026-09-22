@@ -7,7 +7,6 @@ export default async function handler(req, res) {
 
   try {
     const sql = neon(process.env.DATABASE_URL);
-    // Получаем все темы, отсортированные по времени создания
     const topics = await sql`SELECT id, title, main, secondary FROM topics ORDER BY created_at ASC`;
     
     return res.status(200).json(topics);

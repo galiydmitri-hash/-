@@ -8,8 +8,7 @@ export default async function handler(req, res) {
   try {
     const { id, title, main, secondary } = req.body;
     const sql = neon(process.env.DATABASE_URL);
-    
-    // Записываем новую тему в базу данных
+
     await sql`
       INSERT INTO topics (id, title, main, secondary) 
       VALUES (${id}, ${title}, ${main}, ${secondary})
