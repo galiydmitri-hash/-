@@ -8,7 +8,7 @@
 </head>
 <body>
     <header>
-        <button class="dashboard-btn">
+        <button class="dashboard-btn console-btn">
             <svg width="30" height="30" viewBox="0 0 24 24" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <rect x="3.5" y="3.5" width="10" height="7" rx="1.5"
@@ -21,7 +21,20 @@
                     fill="#d1d5db"/>
             </svg>
         </button>
-        <button class="add-btn">
+        <button class="search-icon console-btn">
+            <svg width="35" height="35" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                <circle cx="10.5" cy="10.5" r="6.5"
+                        stroke="#d1d5db"
+                        stroke-width="2"
+                        stroke-linecap="round"/>
+                <path d="M16 16L21 21"
+                        stroke="#d1d5db"
+                        stroke-width="2"
+                        stroke-linecap="round"/>
+            </svg>
+        </button>
+        <button class="add-btn console-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none">
                 <path
                     d="M12 5V19M5 12H19"
@@ -31,7 +44,7 @@
                 />
             </svg>
         </button>
-        <button class="list-btn">
+        <button class="list-btn console-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none">
                 <path
                     d="M7 15L12 10L17 15"
@@ -42,6 +55,19 @@
                 />
             </svg>
         </button>
+        <div class="search-container">
+            <input type="text" class="search-area" placeholder="Пошук...">
+            <button class="close-btn">            
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none">
+                    <path
+                        d="M12 5V19M5 12H19"
+                        stroke="#d1d5db"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                    />
+                </svg>
+            </button>
+        </div>
         <ul class="list"></ul>
     </header>
     <div class="main-container">

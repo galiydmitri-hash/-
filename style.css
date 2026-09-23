@@ -13,6 +13,7 @@
     --blue-dark: #1d4ed8;
     --bg: #f8f9fa;
     --surface: #ffffff;
+    --surface-header: #ffffffa2;
     --surface-secondary: #f1f3f5;
     --border: #e9ecef;
     --border-input: #dee2e6;
@@ -52,8 +53,53 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: var(--surface);
-    border-bottom: 1px solid var(--border);
+    background-color: var(--surface-header);
+    backdrop-filter: blur(4px);
+}
+
+header.is-search{
+    justify-content: center;
+}
+
+header.is-search .console-btn {
+    display: none;
+}
+
+.search-area{
+    height: 100%;
+    width: 70%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.search-container{
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    transition: all 0.25s;
+}
+
+.search-container.is-active{
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.search-area::placeholder{
+    color: var(--text);
 }
 
 .title {
@@ -66,7 +112,8 @@ header {
 .list-btn,
 .add-btn,
 .close-btn,
-.dashboard-btn {
+.dashboard-btn,
+.search-icon {
     width: 44px;
     height: 44px;
     display: inline-flex;
@@ -84,13 +131,16 @@ header {
 .list-btn:hover,
 .add-btn:hover,
 .close-btn:hover,
-.dashboard-btn:hover {
+.dashboard-btn:hover,
+.search-icon:hover {
     background-color: var(--surface-secondary);
 }
 
 .list-btn:active,
 .add-btn:active,
-.close-btn:active {
+.close-btn:active,
+.dashboard-btn:active,
+.search-icon:active {
     background-color: var(--border);
 }
 

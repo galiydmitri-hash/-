@@ -6,6 +6,8 @@ const addBtn = document.querySelector('.add-btn');
 const closeBtn = document.querySelectorAll('.close-btn');
 const shortInfo = document.querySelector('.short-info');
 const addNewLink = document.querySelector('.add-new-link');
+const searchBtn = document.querySelector('.search-icon')
+const searchContainer = document.querySelector('.search-container')
 
 function openOrCloseList() {
     list.classList.toggle('is-active');
@@ -13,6 +15,13 @@ function openOrCloseList() {
 }
 
 export function List() {
+    if (searchBtn && searchContainer) {
+        searchBtn.addEventListener('click', () => {
+            searchContainer.classList.add('is-active')
+            document.querySelector('header').classList.add('is-search')
+        })
+    }
+
     if (listBtn && list) {
         listBtn.addEventListener('click', (event) => {
             event.stopPropagation();
@@ -43,6 +52,10 @@ export function List() {
         closeBtn.forEach((btn) => {
             btn.addEventListener('click', () => {
                     bg.classList.remove('is-active');
+                    if (searchContainer?.classList.contains('is-active')){
+                        searchContainer.classList.remove('is-active')
+                        document.querySelector('header').classList.remove('is-search')
+                    } 
                     if (addNewLink?.classList.contains('is-active')) addNewLink.classList.remove('is-active');
                     if (addNewTopic?.classList.contains('is-active')) addNewTopic.classList.remove('is-active');
                 });
