@@ -6,7 +6,6 @@ const list = document.querySelector('.list');
 const topicList = document.querySelector('.topic-list');
 const bg = document.querySelector('.bg');
 const addNewTopic = document.querySelector('.add-new-topic');
-const searchInput = document.querySelector('.search-input'); // <-- ВАШ ИНПУТ ДЛЯ ПОИСКА
 
 let isEventsInitialized = false;
 
@@ -68,11 +67,6 @@ async function loadTopics() {
     topicList.innerHTML = '';
     const topics = await getStoredTopics(); 
     topics.forEach((topic, index) => renderTopicItem(topic, index === 0));
-    
-    // Если пользователь уже что-то ввел в поиск до загрузки, сразу фильтруем
-    if (searchInput && searchInput.value.trim() !== '') {
-        filterTopics(searchInput.value);
-    }
 }
 
 async function handleAddTopic(event) {
@@ -104,12 +98,6 @@ async function handleAddTopic(event) {
 
         bg.classList.remove('is-active');
         addNewTopic.classList.remove('is-active');
-
-        // Сбрасываем поиск при добавлении нового элемента, чтобы пользователь его увидел
-        if (searchInput) {
-            searchInput.value = '';
-            filterTopics('');
-        }
     } else {
         alert('Не удалось сохранить данные на сервер.');
     }
@@ -131,45 +119,12 @@ function handleTabClick(event) {
     });
 }
 
-// Выделенная функция для фильтрации элементов
-function filterTopics(queryText) {
-    const query = queryText.toLowerCase().trim();
-
-    // 1. Фильтруем кнопки в списке слева (по названию темы)
-    document.querySelectorAll('.option-btn').forEach(btn => {
-        const text = btn.textContent.toLowerCase();
-        const parentLi = btn.closest('li');
-        if (parentLi) {
-            parentLi.style.display = text.includes(query) ? '' : 'none';
-        }
-    });
-
-    // 2. Фильтруем сами карточки справа (по главному тексту и описанию)
-    document.querySelectorAll('.tab-content').forEach(card => {
-        const mainText = card.querySelector('.main-info').textContent.toLowerCase();
-        const secText = card.querySelector('.secondary-info').textContent.toLowerCase();
-        
-        if (mainText.includes(query) || secText.includes(query)) {
-            // Если карточка подходит и должна быть активной в данный момент, возвращаем её отображение
-            card.style.display = ''; 
-        } else {
-            card.style.display = 'none';
-        }
-    });
-}
-
-// Главная функция инициализации модуля
 export function createNewElement() {
     loadTopics();
     
     if (!isEventsInitialized) {
         btn.addEventListener('click', handleAddTopic);
         list.addEventListener('click', handleTabClick);
-        
-        // Навешиваем событие живого поиска
-        if (searchInput) {
-            searchInput.addEventListener('input', (e) => filterTopics(e.target.value));
-        }
         
         isEventsInitialized = true;
     }
