@@ -64,19 +64,24 @@ export default async function handler(req, res) {
     );
 
     const data = await response.json();
-    const candidate = data.candidates?.[0]?.content?.parts?.[0];
+    const parts = data.candidates?.[0]?.content?.parts || [];
 
-    if (candidate?.functionCall) {
+    // Ищем вызов функции среди всех частей ответа
+    const functionCallPart = parts.find(p => p.functionCall);
+
+    if (functionCallPart) {
       return res.status(200).json({
         functionCall: {
-          name: candidate.functionCall.name,
-          args: candidate.functionCall.args
+          name: functionCallPart.functionCall.name,
+          args: functionCallPart.functionCall.args
         }
       });
     }
 
+    // Если вызова функции нет, возвращаем текстовый ответ
+    const textPart = parts.find(p => p.text);
     return res.status(200).json({
-      text: candidate?.text || 'Не вдалося обробити запит.'
+      text: textPart?.text || 'Не вдалося отримати відповідь.'
     });
 
   } catch (error) {

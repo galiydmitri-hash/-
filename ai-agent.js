@@ -20,7 +20,6 @@ async function handleSendMessage() {
     appendMessage(inputValue, 'user');
     inputArea.value = '';
 
-    // 2. Добавляем временное сообщение ожидания от бота
     const loadingMessage = document.createElement('div');
     loadingMessage.classList.add('ai-message', 'bot');
     loadingMessage.textContent = 'Шукаю інформацію...';
@@ -28,7 +27,6 @@ async function handleSendMessage() {
     aiMessages.scrollTop = aiMessages.scrollHeight;
 
     try {
-        // 3. Запрос на сервер
         const response = await fetch('/api/ai-agent', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -36,11 +34,8 @@ async function handleSendMessage() {
         });
 
         const data = await response.json();
-        
-        // Удаляем индикатор загрузки
         loadingMessage.remove();
 
-        // 4. Проверяем ответ от ИИ
         if (data.functionCall && data.functionCall.name === 'create_topic') {
             const { title, main, secondary } = data.functionCall.args;
 
@@ -51,30 +46,35 @@ async function handleSendMessage() {
                 secondary
             };
 
-            // Сохраняем в базу и рендерим
+            // Проверяем, первая ли это карточка в списке
+            const listContainer = document.querySelector('.list');
+            const isFirst = listContainer && listContainer.children.length === 0;
+
             const isSaved = await saveTopicToDatabase(newTopic);
             if (isSaved) {
-                renderTopicItem(newTopic, false);
+                renderTopicItem(newTopic, isFirst);
                 appendMessage(`Тему "${title}" успішно додано!`, 'bot');
             } else {
                 appendMessage('Помилка при збереженні теми в базу.', 'bot');
             }
         } else {
-            // Если ИИ вернул обычный текст
             appendMessage(data.text || 'Не вдалося отримати відповідь.', 'bot');
         }
 
     } catch (error) {
-        loadingMessage.remove();
+        loadingMessage?.remove();
         appendMessage('Помилка з’єднання з сервером.', 'bot');
         console.error(error);
     }
 }
 
-aiBtn.addEventListener('click', handleSendMessage);
+export function initAiAgent() {
+    if (!aiBtn || !inputArea) return;
 
-inputArea.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-        handleSendMessage();
-    }
-});
+    aiBtn.addEventListener('click', handleSendMessage);
+    inputArea.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            handleSendMessage();
+        }
+    });
+}
