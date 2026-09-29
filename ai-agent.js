@@ -1,79 +1,76 @@
 import { saveTopicToDatabase, renderTopicItem } from './validation.js';
 
 const inputArea = document.getElementById('aiInput');
-const aiMessages = document.getElementById('aiMessages'); 
+const aiMessages = document.getElementById('aiMessages');
 const aiBtn = document.getElementById('aiSendBtn');
+let isSending = false;
 
-function appendMessage(text, sender) {
+function appendMessage(text, sender = 'bot') {
+    if (!aiMessages) return;
     const message = document.createElement('div');
-    message.classList.add('ai-message', sender);
-    message.textContent = text;
+    message.className = `ai-message ${sender}`;
+    message.textContent = String(text ?? '');
     aiMessages.appendChild(message);
-
     aiMessages.scrollTop = aiMessages.scrollHeight;
+    return message;
 }
 
 async function handleSendMessage() {
-    const inputValue = inputArea.value.trim();
-    if (!inputValue) return; 
+    if (!inputArea || isSending) return;
+    const prompt = inputArea.value.trim();
+    if (!prompt) return;
 
-    appendMessage(inputValue, 'user');
+    appendMessage(prompt, 'user');
     inputArea.value = '';
-
-    const loadingMessage = document.createElement('div');
-    loadingMessage.classList.add('ai-message', 'bot');
-    loadingMessage.textContent = 'Шукаю інформацію...';
-    aiMessages.appendChild(loadingMessage);
-    aiMessages.scrollTop = aiMessages.scrollHeight;
+    const loading = appendMessage('Шукаю інформацію…', 'bot');
+    isSending = true;
+    if (aiBtn) aiBtn.disabled = true;
 
     try {
         const response = await fetch('/api/ai-agent', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prompt: inputValue })
+            body: JSON.stringify({ prompt })
         });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(data.error || `HTTP ${response.status}`);
 
-        const data = await response.json();
-        loadingMessage.remove();
+        if (data.functionCall?.name === 'create_topic') {
+            const { title, main, secondary } = data.functionCall.args || {};
+            if (![title, main, secondary].every(value => typeof value === 'string' && value.trim())) {
+                throw new Error('AI повернув неповні дані теми.');
+            }
 
-        if (data.functionCall && data.functionCall.name === 'create_topic') {
-            const { title, main, secondary } = data.functionCall.args;
-
-            const newTopic = {
-                id: `tab-${Date.now()}`,
-                title,
-                main,
-                secondary
+            const topic = {
+                id: `tab-${globalThis.crypto?.randomUUID?.() || Date.now()}`,
+                title: title.trim(), main: main.trim(), secondary: secondary.trim()
             };
-
-            // Проверяем, первая ли это карточка в списке
-            const listContainer = document.querySelector('.list');
-            const isFirst = listContainer && listContainer.children.length === 0;
-
-            const isSaved = await saveTopicToDatabase(newTopic);
-            if (isSaved) {
-                renderTopicItem(newTopic, isFirst);
-                appendMessage(`Тему "${title}" успішно додано!`, 'bot');
+            const isFirst = !document.querySelector('.list')?.children.length;
+            if (await saveTopicToDatabase(topic)) {
+                renderTopicItem(topic, isFirst);
+                appendMessage(`Тему «${topic.title}» успішно додано!`);
             } else {
-                appendMessage('Помилка при збереженні теми в базу.', 'bot');
+                appendMessage('Не вдалося зберегти тему в базі даних.');
             }
         } else {
-            appendMessage(data.text || 'Не вдалося отримати відповідь.', 'bot');
+            appendMessage(data.text || 'Не вдалося отримати відповідь.');
         }
-
     } catch (error) {
-        loadingMessage?.remove();
-        appendMessage('Помилка з’єднання з сервером.', 'bot');
-        console.error(error);
+        appendMessage(error.message || 'Помилка з’єднання із сервером.');
+        console.error('AI agent error:', error);
+    } finally {
+        loading?.remove();
+        isSending = false;
+        if (aiBtn) aiBtn.disabled = false;
     }
 }
 
 export function initAiAgent() {
     if (!aiBtn || !inputArea) return;
-
     aiBtn.addEventListener('click', handleSendMessage);
     inputArea.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
             handleSendMessage();
         }
     });

@@ -1,4 +1,10 @@
 {
+  "name": "istoriia-ukrainy",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "vercel dev"
+  },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0"
   }

@@ -2,15 +2,21 @@ import { neon } from '@neondatabase/serverless';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
+    res.setHeader('Allow', 'GET');
     return res.status(405).json({ error: 'Method not allowed' });
+  }
+  if (!process.env.DATABASE_URL) {
+    return res.status(500).json({ error: 'DATABASE_URL не налаштовано.' });
   }
 
   try {
     const sql = neon(process.env.DATABASE_URL);
-    const topics = await sql`SELECT id, title, main, secondary FROM topics ORDER BY created_at ASC`;
-    
+    const topics = await sql`
+      SELECT id, title, main, secondary FROM topics ORDER BY created_at ASC
+    `;
     return res.status(200).json(topics);
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    console.error('Database query error:', error);
+    return res.status(500).json({ error: 'Не вдалося завантажити теми.' });
   }
 }
