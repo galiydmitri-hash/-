@@ -20,7 +20,7 @@ async function getStoredTopics() {
     }
 }
 
-async function saveTopicToDatabase(newTopic) {
+export async function saveTopicToDatabase(newTopic) {
     try {
         const response = await fetch('/api/add-topic', {
             method: 'POST',
@@ -35,7 +35,7 @@ async function saveTopicToDatabase(newTopic) {
     }
 }
 
-function renderTopicItem(topic, isFirst) {
+export function renderTopicItem(topic, isFirst) {
     const option = document.createElement('li');
     const optionBtn = document.createElement('button');
     optionBtn.className = `option-btn ${isFirst ? 'is-focus' : ''}`;
